@@ -15,7 +15,7 @@ StudentTextEditor::StudentTextEditor(Undo* undo)
 	// TODO
      editCol = 0;
      editRow = 0;
-     currentRow = fileText.begin();
+     //currentRow = fileText.begin();
 }
 
 StudentTextEditor::~StudentTextEditor()
@@ -37,6 +37,7 @@ bool StudentTextEditor::load(std::string file) {
         }
         fileText.push_back(s);
     }
+    currentRow = fileText.begin();
 	return true;  // TODO
 }
 
@@ -136,8 +137,15 @@ int StudentTextEditor::getLines(int startRow, int numRows, std::vector<std::stri
     lines.clear();
     //iterator points to the startRow
     std::list<std::string>::iterator it = currentRow;
-    for(int i = editRow; i<startRow;i++){
-        it ++;
+    if(startRow < editRow){
+        for(int i = editRow; i>startRow;i--){
+            it --;
+        }
+    }
+    else{
+        for(int i = editRow; i<startRow;i++){
+            it ++;
+        }
     }
     //add to lines
     int i=0;
